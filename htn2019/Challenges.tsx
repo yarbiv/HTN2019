@@ -1,23 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
-const friendsList: any[] = [
-    { key: 'Devin', score: 102 },
-    { key: 'Jackson', score: 101 },
-    { key: 'James', score: 55 },
+const challenges: any[] = [
+    { key: 'Reduce Friday\'s waste by 500 grams', score: 102 },
+    { key: 'Keep up your streak of less than 60kg per week!', score: 101 },
+    { key: 'Challenge: produce less waste than Jimmy on Thursday!', score: 55 },
     { key: 'Joel', score: 11 },
     { key: 'John', score: 10 },
-    { key: 'Jillian', score: 1 },
-    { key: 'Jimmy', score: 19 },
-    { key: 'Julie', score: 1000 },
-    { key: 'Jafar', score: 430 },
-    { key: 'Starlord', score: 9407 },
-    { key: 'Shaq', score: 9012 },
-    { key: 'Bloop Bleep', score: 34 },
-    { key: 'ItsLate', score: 55 },
-    { key: 'Michael', score: 23 },
-    { key: 'Jordan', score: 60 },
-    { key: 'Romeo', score: 244 },
 ]
 
 const Friends = () => {
@@ -25,20 +14,19 @@ const Friends = () => {
         <View style={styles.container}>
             <View style={{backgroundColor: 'lightgrey', marginTop: 50, opacity: 0.5}}>
                 <Text style={{color: 'black', opacity: 1, textAlign: 'center', fontSize: 18}}>
-                    Leaderboard this week:
+                    Your challenges this week:
                 </Text>
             </View>
             <FlatList
-                data={friendsList.sort((a, b) => a.score - b.score)}
+                data={challenges}
                 contentContainerStyle={styles.listView}
-                renderItem={({ item, index }) => {
+                renderItem={({ item }) => {
                     return (
                         <View style={styles.itemContainer}>
-                            <Text style={styles.numText}>{index+1}</Text>
-                            <View style={{margin: 'auto'}}>
+                            <View style={{flex: 1}}>
                                 <Text style={styles.keyText}>{item.key}</Text>
-                                <Text style={styles.scoreText}>{item.score} kg</Text>
                             </View>
+                            <Text style={styles.scoreText}>{item.score} kg</Text>
                         </View>
                     );
                 }}
@@ -56,25 +44,14 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         flex: 1,
-        justifyContent: 'flex-start',
-        flexDirection: 'row',
         margin: 5,
         borderBottomColor: 'black',
         borderBottomWidth: 0.5,
     },
     keyText: {
-        padding: 0,
         fontSize: 18,
         height: 25,
-        marginBottom: 0,
-    },
-    numText: {
-        fontSize: 18,
-        marginBottom: 0,
-        marginRight: 10,
-        marginLeft: 5,
-        alignSelf: 'center',
-        color: '#a9a9a9',
+        flexWrap: 'wrap',
     },
     scoreText: {
         fontSize: 18,

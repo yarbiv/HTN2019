@@ -5,25 +5,30 @@ import { createAppContainer } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import Dashboard from './Dashboard';
 import Friends from './Friends';
+import Challenges from './Challenges';
 
+const DashboardIcon = () => <Ionicons name="md-podium" size={26} />
+const FriendsIcon = () => <Ionicons name="md-people" size={26} />
+const AccountIcon = () => <Ionicons name="md-person" size={26} />
+const ChallengesIcon = () => <Ionicons name="md-ribbon" size={26}/>
 
-const AccountIcon = () => <Ionicons name="contact" size={32} />
 const Test1 = () => <View><Text>No Way</Text></View>
 
 const RouteConfigs: any = {
-    Dashboard: { screen: Dashboard },
-    You: { screen: Test1, tabBarIcon: AccountIcon },
-    Friends: { screen: Friends },
+    Dashboard: { screen: Dashboard, navigationOptions: { tabBarIcon: DashboardIcon } },
+    Challenges: { screen: Challenges, navigationOptions: { tabBarIcon: ChallengesIcon } },
+    Friends: { screen: Friends, navigationOptions: { tabBarIcon: FriendsIcon } },
+    Account: { screen: Test1, navigationOptions: { tabBarIcon: AccountIcon } },
 }
 
 const MaterialBottomTabNavigatorConfig: any = {
   initialRouteName: 'Dashboard',
-  activeColor: '#f0edf6',
+  activeColor: '#000000',
   inactiveColor: '#3e2465',
-  barStyle: { backgroundColor: '#694fad' },
+  barStyle: { backgroundColor: '#add8e6' },
   tabBarOptions: {
     showIcon: true
-  },  
+  },
 }
 
 const Nav = createMaterialBottomTabNavigator(RouteConfigs, MaterialBottomTabNavigatorConfig);
