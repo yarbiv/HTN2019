@@ -6,6 +6,8 @@ import { Ionicons } from '@expo/vector-icons';
 import Dashboard from './Dashboard';
 import Friends from './Friends';
 import Challenges from './Challenges';
+import Account from './Account';
+
 import * as firebase from 'firebase';
 
 const firebaseConfig = {
@@ -15,7 +17,9 @@ const firebaseConfig = {
   storageBucket: "wasteless-ad0ff.appspot.com"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const getThisWeek = (setThisWeek, thisWeek=true) => {
   const today = new Date();
@@ -26,21 +30,20 @@ const getThisWeek = (setThisWeek, thisWeek=true) => {
     const newDate = date - i;
     const queryString = `${today.getFullYear()}-${month}-${newDate}`;
     firebase.database().ref(`${queryString}/`).on('value', (snapshot) => {
-      let sum = 0;
+      let max = 0;
       snapshot.forEach((measurement) => {
-        sum += measurement.val();
-      })
-      const avg = sum / snapshot.numChildren();
+        max = measurement.val() > max ? measurement.val() : max;
+      });
       if (thisWeek) {
-        addThisWeek[i] = {day: `${month}/${newDate}`, waste: avg};
+        addThisWeek[i] = {day: `${month}/${newDate}`, waste: max/1000};
       } else {
-        addThisWeek[i] = {day: `${month}/${newDate + 7}`, waste: avg};
+        addThisWeek[i] = {day: `${month}/${newDate + 7}`, waste: max/1000};
       }
 
     }, (err) => console.log(err));
   }
   setTimeout(() => {
-    setThisWeek(addThisWeek);
+    setThisWeek(addThisWeek.reverse());
   }, 1000)
 }
 
@@ -60,7 +63,7 @@ const MaterialBottomTabNavigatorConfig: any = {
   initialRouteName: 'Dashboard',
   activeColor: '#000000',
   inactiveColor: '#3e2465',
-  barStyle: { backgroundColor: '#add8e6' },
+  barStyle: { backgroundColor: '#176cd4' },
   tabBarOptions: {
     showIcon: true
   },
@@ -75,7 +78,7 @@ export default function App() {
   useEffect(() => {
     getThisWeek(setThisWeek);
     getThisWeek(setLastWeek, false);
-  }, []);
+  }, [thisWeek]);
   return (
     <Container style={styles.container} screenProps={{thisWeek, lastWeek}} />
   ); 

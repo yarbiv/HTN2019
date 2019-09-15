@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
+import { VictoryLine, VictoryChart, VictoryTheme, VictoryAxis } from "victory-native";
 import ProgressCircle from 'react-native-progress-circle';
 
 const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -13,36 +13,45 @@ const Dashboard = (props) => {
             </View>
         );
     }
+
     const { lastWeek, thisWeek } = props.screenProps;
-    lastWeek.reverse();
-    thisWeek.reverse();
     const lastDay = lastWeek[6];
     const thisDay = thisWeek[6];
 
     const today = days[new Date().getDay()];
+    const percentage = Math.round(thisDay.waste/lastDay.waste * 100);
 
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 20, textDecorationLine: "underline", marginBottom: 5, color: '#add8e6'}} >Today:</Text>
-            <ProgressCircle percent={Math.round(thisDay/lastDay * 100)} radius={100}>
-                <Text style={{textAlign: "center"}}>
-                    {Math.round(thisDay.waste/lastDay.waste * 100) - 100}%
+            <Text style={{fontSize: 20, marginBottom: 5, color: '#176cd4', fontWeight: 'bold'}} >Today:</Text>
+            <ProgressCircle percent={Math.abs(percentage - 100)}
+                            radius={100}
+                            borderWidth={8}
+                            color={percentage < 100 ? "#47ad39" : "red"} >
+                <Text style={{textAlign: "center", width: '60%', fontWeight: 'bold', fontSize: 30}}>
+                    {thisDay.waste} kg
+                </Text>
+                <Text style={{textAlign: "center", width: '80%'}} >
+                    {percentage - 100}%
                     {lastDay.waste > thisDay.waste ?
                         ` waste compared to last ${today}!` :
                         ` increase from last ${today}.`
                     }
                 </Text>
             </ProgressCircle>
-            <Text style={{fontSize: 20, textDecorationLine: "underline", marginTop: 10, color: '#add8e6'}} >Last 7 days:</Text>
+            <Text style={{fontSize: 20, fontWeight: "bold", marginTop: 10, color: '#176cd4'}} >Last 7 days:</Text>
             <VictoryChart theme={VictoryTheme.material}>
+                <VictoryAxis label="dates" style={{axisLabel: { padding: 30 }}} />
+                <VictoryAxis dependentAxis style={{axisLabel: { padding: 30 }}}
+                             fixLabelOverlap label="kg"/>
                 <VictoryLine style={{
                     title: "Waste this week",
-                    data: { stroke: "#c43a31" },
+                    data: { stroke: "#d12440" },
                     parent: { border: "1px solid #ccc"}
                 }} data={thisWeek} x="day" y="waste" />
                 <VictoryLine style={{
                     title: "Waste last week",
-                    data: { stroke: "blue", strokeDasharray: "5,5", fillOpacity: 0.5 }
+                    data: { stroke: "grey", strokeDasharray: "5,5", fillOpacity: 0.5 }
                 }} data={lastWeek} x="day" y="waste" />
             </VictoryChart>
         </View>

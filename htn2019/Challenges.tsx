@@ -4,12 +4,10 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 const challenges: any[] = [
     { key: 'Reduce Friday\'s waste by 500 grams', score: 102 },
     { key: 'Keep up your streak of less than 60kg per week!', score: 101 },
-    { key: 'Challenge: produce less waste than Jimmy on Thursday!', score: 55 },
-    { key: 'Joel', score: 11 },
-    { key: 'John', score: 10 },
+    { key: 'Produce less waste than Michael J. on Thursday!', score: 55 },
 ]
 
-const Friends = () => {
+const Challenges = () => {
     return (
         <View style={styles.container}>
             <View style={{backgroundColor: 'lightgrey', marginTop: 50, opacity: 0.5}}>
@@ -65,4 +63,4 @@ const styles = StyleSheet.create({
     }
   });
   
-export default Friends;
+export default Challenges;
