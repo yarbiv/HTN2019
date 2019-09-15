@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
 const challenges: any[] = [
-    { key: 'Reduce Friday\'s waste by 500 grams', score: 102 },
-    { key: 'Keep up your streak of less than 60kg per week!', score: 101 },
-    { key: 'Produce less waste than Michael J. on Thursday!', score: 55 },
+    { key: 'Reduce Friday\'s waste by 500 grams', progress: 102 },
+    { key: 'Keep up your streak of less than 60kg per week!', progress: 101 },
+    { key: 'Produce less waste than Michael J. on Thursday!', progress: 55 },
 ]
 
 const Challenges = () => {
