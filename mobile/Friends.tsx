@@ -3,10 +3,11 @@ import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 const friendsList: any[] = [
-    { key: 'Devin B.', score: 10.1 },
+    { key: 'Devin B.', score: 40 },
     { key: 'Jeffery E.', score: 15 },
+    { key: 'You', score: 11.2 },
     { key: 'LBJ', score: 3.01 },
-    { key: 'Michael J.', score: 3 },
+    { key: 'Michael J.', score: 12 },
     { key: 'John S.', score: 2.6 },
     { key: 'Marie C.', score: 2.4 },
     { key: 'William S.', score: 30 },
@@ -14,7 +15,7 @@ const friendsList: any[] = [
     { key: 'Pamela A.', score: 6.7 },
     { key: 'Ronald M.', score: 8.11 },
     { key: 'Geraldo', score: 5.16 },
-    { key: 'Charles K.', score: 12 },
+    { key: 'Charles K.', score: 20 },
     { key: 'Nancy P.', score: 10.1 },
     { key: 'Anna K.', score: 5 },
     { key: 'Lonzo B.', score: 2.1 },
@@ -40,7 +41,10 @@ const Friends = () => {
                                 <Text style={styles.keyText}>{item.key}</Text>
                                 <Text style={styles.scoreText}>{item.score} kg</Text>
                             </View>
-                        <Ionicons name="md-open" style={{marginLeft: 'auto', marginRight: 10}} size={32} />
+                        {item.key !== 'You' ?
+                        <Ionicons name="md-open" style={{marginLeft: 'auto', marginRight: 10}} size={32} /> :
+                        <View />}
+                        
                         </View>
                     );
                 }}

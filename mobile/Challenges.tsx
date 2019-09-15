@@ -1,10 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const challenges: any[] = [
-    { key: 'Reduce Friday\'s waste by 500 grams', progress: 102 },
-    { key: 'Keep up your streak of less than 60kg per week!', progress: 101 },
-    { key: 'Produce less waste than Michael J. on Thursday!', progress: 55 },
+    { key: 'Reduce Friday\'s waste by 500 grams', progress: "Oops! You were 0.6 kg off 😔" },
+    { key: 'Keep up your streak of less than 60kg per week!', progress: "5 weeks! 🔥🔥" },
+    { key: 'Produce less waste than Michael J. on Thursday!', progress: "Success! 7.8 kg vs 8.2kg" },
+    { key: 'Challenge a friend?', progress: "" }
 ]
 
 const Challenges = () => {
@@ -24,7 +26,10 @@ const Challenges = () => {
                             <View style={{flex: 1}}>
                                 <Text style={styles.keyText}>{item.key}</Text>
                             </View>
-                            <Text style={styles.scoreText}>{item.score} kg</Text>
+                            <Text style={styles.progressText}>{item.progress}</Text>
+                            <View style={{alignSelf: 'flex-end'}} >
+                                {item.progress === "" ? <Ionicons name="md-add-circle" size={50} /> : <View />}
+                            </View>
                         </View>
                     );
                 }}
@@ -42,24 +47,23 @@ const styles = StyleSheet.create({
     },
     itemContainer: {
         flex: 1,
-        margin: 5,
+        margin: 10,
         borderBottomColor: 'black',
         borderBottomWidth: 0.5,
+        height: 100
     },
     keyText: {
         fontSize: 18,
         height: 25,
         flexWrap: 'wrap',
     },
-    scoreText: {
-        fontSize: 18,
-        height: 25,
-        marginBottom: 0,
+    progressText: {
+        fontSize: 26,
         color: '#a9a9a9',
     },
     listView: {
-        paddingTop: 10,
-        paddingBottom: 20,
+        paddingTop: 0,
+        paddingBottom: 0,
     }
   });
   

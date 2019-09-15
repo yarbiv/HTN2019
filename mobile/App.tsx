@@ -56,7 +56,7 @@ const RouteConfigs: any = {
     Dashboard: { screen: Dashboard, navigationOptions: { tabBarIcon: DashboardIcon } },
     Challenges: { screen: Challenges, navigationOptions: { tabBarIcon: ChallengesIcon } },
     Friends: { screen: Friends, navigationOptions: { tabBarIcon: FriendsIcon } },
-    Account: { screen: Challenges, navigationOptions: { tabBarIcon: AccountIcon } },
+    Account: { screen: Account, navigationOptions: { tabBarIcon: AccountIcon } },
 }
 
 const MaterialBottomTabNavigatorConfig: any = {
