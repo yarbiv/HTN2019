@@ -1,23 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 
 const friendsList: any[] = [
-    { key: 'Devin', score: 102 },
-    { key: 'Jackson', score: 101 },
-    { key: 'James', score: 55 },
-    { key: 'Joel', score: 11 },
-    { key: 'John', score: 10 },
-    { key: 'Jillian', score: 1 },
-    { key: 'Jimmy', score: 19 },
-    { key: 'Julie', score: 1000 },
-    { key: 'Jafar', score: 430 },
-    { key: 'Starlord', score: 9407 },
-    { key: 'Shaq', score: 9012 },
-    { key: 'Bloop Bleep', score: 34 },
-    { key: 'ItsLate', score: 55 },
-    { key: 'Michael', score: 23 },
-    { key: 'Jordan', score: 60 },
-    { key: 'Romeo', score: 244 },
+    { key: 'Devin B.', score: 10.1 },
+    { key: 'Jeffery E.', score: 15 },
+    { key: 'LBJ', score: 3.01 },
+    { key: 'Michael J.', score: 3 },
+    { key: 'John S.', score: 2.6 },
+    { key: 'Marie C.', score: 2.4 },
+    { key: 'William S.', score: 30 },
+    { key: 'Steve N.', score: 8.9 },
+    { key: 'Pamela A.', score: 6.7 },
+    { key: 'Ronald M.', score: 8.11 },
+    { key: 'Geraldo', score: 5.16 },
+    { key: 'Charles K.', score: 12 },
+    { key: 'Nancy P.', score: 10.1 },
+    { key: 'Anna K.', score: 5 },
+    { key: 'Lonzo B.', score: 2.1 },
+    { key: 'Gordon', score: 14 },
 ]
 
 const Friends = () => {
@@ -39,6 +40,7 @@ const Friends = () => {
                                 <Text style={styles.keyText}>{item.key}</Text>
                                 <Text style={styles.scoreText}>{item.score} kg</Text>
                             </View>
+                        <Ionicons name="md-open" style={{marginLeft: 'auto', marginRight: 10}} size={32} />
                         </View>
                     );
                 }}

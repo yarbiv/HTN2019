@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Picker } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createAppContainer } from 'react-navigation';
@@ -17,11 +17,11 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-const getThisWeek = (thisWeek, setThisWeek) => {
+const getThisWeek = (setThisWeek, thisWeek=true) => {
   const today = new Date();
   const month = today.getMonth()+1;
-  const date = today.getDate();
-  const addThisWeek = {};
+  const date = thisWeek ? today.getDate() : today.getDate() - 7;
+  const addThisWeek = [];
   for (let i = 0; i < 7; i++) {
     const newDate = date - i;
     const queryString = `${today.getFullYear()}-${month}-${newDate}`;
@@ -31,14 +31,17 @@ const getThisWeek = (thisWeek, setThisWeek) => {
         sum += measurement.val();
       })
       const avg = sum / snapshot.numChildren();
-      addThisWeek[`${month}/${newDate}`] = avg;
       if (thisWeek) {
-        setThisWeek(...thisWeek, addThisWeek);
+        addThisWeek[i] = {day: `${month}/${newDate}`, waste: avg};
       } else {
-        setThisWeek(addThisWeek);
+        addThisWeek[i] = {day: `${month}/${newDate + 7}`, waste: avg};
       }
+
     }, (err) => console.log(err));
   }
+  setTimeout(() => {
+    setThisWeek(addThisWeek);
+  }, 1000)
 }
 
 const DashboardIcon = () => <Ionicons name="md-podium" size={26} />
@@ -68,12 +71,14 @@ const Container = createAppContainer(Nav);
 
 export default function App() {
   const [thisWeek, setThisWeek] = useState(null);
-  if (!thisWeek) {
-    getThisWeek(thisWeek, setThisWeek);
-  }
+  const [lastWeek, setLastWeek] = useState(null);
+  useEffect(() => {
+    getThisWeek(setThisWeek);
+    getThisWeek(setLastWeek, false);
+  }, []);
   return (
-    <Container style={styles.container}/>
-  );
+    <Container style={styles.container} screenProps={{thisWeek, lastWeek}} />
+  ); 
 }
 
 const styles = StyleSheet.create({

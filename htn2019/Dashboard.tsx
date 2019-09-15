@@ -1,48 +1,39 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { VictoryLine, VictoryChart, VictoryTheme } from "victory-native";
 import ProgressCircle from 'react-native-progress-circle';
 
-const thisWeek: any[] = [
-    { day: 'Mon', waste: 20 },
-    { day: 'Tues', waste: 10 },
-    { day: 'Wed', waste: 35 },
-    { day: 'Thurs', waste: 5 },
-    { day: 'Fri', waste: 45 },
-    { day: 'Sat', waste: 12 },
-    { day: 'Sun', waste: 5 },
-];
+const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const lastWeek: any[] = [
-    { day: 'Mon', waste: 4 },
-    { day: 'Tues', waste: 12 },
-    { day: 'Wed', waste: 30 },
-    { day: 'Thurs', waste: 9 },
-    { day: 'Fri', waste: 55 },
-    { day: 'Sat', waste: 20 },
-    { day: 'Sun', waste: 14 },
-];
+const Dashboard = (props) => {
+    if (!props.screenProps.lastWeek || !props.screenProps.thisWeek) {
+        return (
+            <View style={styles.container}>
+                <ActivityIndicator size="large" color="darkblue" />
+            </View>
+        );
+    }
+    const { lastWeek, thisWeek } = props.screenProps;
+    lastWeek.reverse();
+    thisWeek.reverse();
+    const lastDay = lastWeek[6];
+    const thisDay = thisWeek[6];
 
-const lastDay = lastWeek[6].waste;
-const thisDay = thisWeek[6].waste;
+    const today = days[new Date().getDay()];
 
-// const percent = Math.round(Math.abs(lastDay - thisDay)/((lastDay+thisDay)/2) * 100)
-const day = "Sunday";
-
-const Dashboard = () => {
     return (
         <View style={styles.container}>
-            <Text style={{fontSize: 20, textDecorationLine: "underline", marginBottom: 5}} >Today:</Text>
+            <Text style={{fontSize: 20, textDecorationLine: "underline", marginBottom: 5, color: '#add8e6'}} >Today:</Text>
             <ProgressCircle percent={Math.round(thisDay/lastDay * 100)} radius={100}>
                 <Text style={{textAlign: "center"}}>
-                    {Math.round(thisDay/lastDay * 100) - 100}%
-                    {lastDay > thisDay ?
-                        ` waste compared to last ${day}!` :
-                        ` increase from last ${day}.`
+                    {Math.round(thisDay.waste/lastDay.waste * 100) - 100}%
+                    {lastDay.waste > thisDay.waste ?
+                        ` waste compared to last ${today}!` :
+                        ` increase from last ${today}.`
                     }
                 </Text>
             </ProgressCircle>
-            <Text style={{fontSize: 20, textDecorationLine: "underline", marginTop: 10,}} >Week of Sept. 8:</Text>
+            <Text style={{fontSize: 20, textDecorationLine: "underline", marginTop: 10, color: '#add8e6'}} >Last 7 days:</Text>
             <VictoryChart theme={VictoryTheme.material}>
                 <VictoryLine style={{
                     title: "Waste this week",
